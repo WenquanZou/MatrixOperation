@@ -4,16 +4,16 @@ import java.util.Arrays;
 
 public class Matrix {
 
-  private double[][] elems;
+  private int[][] elems;
 
   //Create normal matrix.
-  public Matrix(double[][] elems) {
+  public Matrix(int[][] elems) {
     this.elems = elems;
   }
 
   //Create matrix with dimension.
   public Matrix(int dimension) {
-    this.elems = new double[dimension][dimension];
+    this.elems = new int[dimension][dimension];
   }
 
   @Override
@@ -33,18 +33,18 @@ public class Matrix {
 
   //Create identity matrix
   public Matrix identity(int dimension) {
-    double[][] result = new double[dimension][dimension];
+    int[][] result = new int[dimension][dimension];
     for (int i = 0; i < dimension; i++) {
       result[i][i] = 1;
     }
     return new Matrix(result);
   }
 
-  public double[][] getElems() {
+  public int[][] getElems() {
     return elems;
   }
 
-  public void changeValue(int x, int y, double v) {
+  public void changeValue(int x, int y, int v) {
     this.elems[x][y] = v;
   }
 
@@ -60,7 +60,7 @@ public class Matrix {
     return this.elems[0].length;
   }
 
-  public double getElem(int x, int y) {
+  public int getElem(int x, int y) {
     return this.elems[x][y];
   }
 
@@ -78,7 +78,7 @@ public class Matrix {
       throw new IllegalArgumentException("Matrix dimension mismatched");
     }
 
-    double[][] result = new double[h][v];
+    int[][] result = new int[h][v];
 
     //Plus operation on each matrix.
     for (int i = 0; i < h; i++) {
@@ -106,7 +106,7 @@ public class Matrix {
     int y = this.getVertDimen();
     int z = n.getVertDimen();
 
-    double[][] result = new double[x][z];
+    int[][] result = new int[x][z];
 
     for (int i = 0; i < x; i++) {
       for (int j = 0; j < z; j++){
@@ -122,7 +122,7 @@ public class Matrix {
     int h = this.getHoriDimen();
     int v = this.getVertDimen();
 
-    double[][] result = new double[v][h];
+    int[][] result = new int[v][h];
 
     for (int i = 0; i < h; i++) {
       for (int j = 0; j < v; j++) {
@@ -132,4 +132,26 @@ public class Matrix {
     return new Matrix(result);
   }
 
+  public Matrix scale(int n) {
+    int h = this.getHoriDimen();
+    int v = this.getVertDimen();
+
+    int[][] result = new int[h][v];
+
+    for (int i = 0; i < h; i++) {
+      for (int j = 0; j < v; j++) {
+        result[i][j] = this.getElem(i, j) * n;
+      }
+    }
+    return new Matrix(result);
+  }
+
+  //TODO: the rest methods are only for square matrix only
+  public Matrix inverse() {
+    return null;
+  }
+
+  public int determinant() {
+    return 0;
+  }
 }
