@@ -48,11 +48,15 @@ public class Matrix {
     this.elems[x][y] = v;
   }
 
-  public int getHoriDimen() {
+  private static boolean checkDimension(Matrix m, Matrix n) {
+    return m.getVertDimen() == n.getHoriDimen();
+  }
+
+  private int getHoriDimen() {
     return this.elems.length;
   }
 
-  public int getVertDimen() {
+  private int getVertDimen() {
     return this.elems[0].length;
   }
 
@@ -60,7 +64,11 @@ public class Matrix {
     return this.elems[x][y];
   }
 
-  //Plus matrix to the existing matrix.
+  /**
+   *
+   * @param n matrix to add.
+   * @return A matrix of result this plus n.
+   */
   public Matrix plus(Matrix n) {
 
     int h = this.elems.length;
@@ -82,7 +90,12 @@ public class Matrix {
 
   }
 
-  //Multiply matrix to the existing matrix and return the result matrix.
+
+  /**
+   *
+   * @param n is the matrix to multiply with
+   * @return A matrix multiplication of this and n.
+   */
   public Matrix multiply(Matrix n) {
     if (!checkDimension(this, n)) {
       throw new IllegalArgumentException("Dimension mismatched");
@@ -103,13 +116,20 @@ public class Matrix {
       }
     }
     return new Matrix(result);
-
   }
 
+  public Matrix transpose() {
+    int h = this.getHoriDimen();
+    int v = this.getVertDimen();
 
-  private static boolean checkDimension(Matrix m, Matrix n) {
-    return m.getVertDimen() == n.getHoriDimen();
+    double[][] result = new double[v][h];
+
+    for (int i = 0; i < h; i++) {
+      for (int j = 0; j < v; j++) {
+        result[j][i] = this.getElem(i, j);
+      }
+    }
+    return new Matrix(result);
   }
-
 
 }

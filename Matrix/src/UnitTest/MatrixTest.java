@@ -6,7 +6,7 @@ import org.junit.Test;
 import static junit.framework.TestCase.assertEquals;
 
 public class MatrixTest {
-  Matrix matrix = new Matrix(4);
+  private Matrix matrix = new Matrix(4);
   @Test
   public void createMatrixTest() {
 
@@ -42,5 +42,15 @@ public class MatrixTest {
     Matrix result = m1.multiply(m2);
 
     assertEquals(m3, result);
+  }
+
+  @Test
+  public void transpose() {
+    double[][] numbers = {{2, 3, 1, 4}, {1, 1, 2, 3}, {3, 5, 7, 1}, {2, 7, 6, 7}};
+    Matrix m = new Matrix(numbers);
+
+    double[][] r = {{2, 1, 3, 2}, {3, 1, 5, 7}, {1, 2, 7, 6}, {4, 3, 1, 7}};
+
+    assertEquals(m.transpose(), new Matrix(r));
   }
 }
