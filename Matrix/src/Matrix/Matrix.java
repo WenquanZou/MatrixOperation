@@ -48,11 +48,11 @@ public class Matrix {
     this.elems[x][y] = v;
   }
 
-  private int getHoriDimen() {
+  public int getHoriDimen() {
     return this.elems.length;
   }
 
-  private int getVertDimen() {
+  public int getVertDimen() {
     return this.elems[0].length;
   }
 
@@ -61,7 +61,7 @@ public class Matrix {
   }
 
   //Plus matrix to the existing matrix.
-  public void plus(Matrix n) {
+  public Matrix plus(Matrix n) {
 
     int h = this.elems.length;
     int v = this.elems[0].length;
@@ -70,12 +70,46 @@ public class Matrix {
       throw new IllegalArgumentException("Matrix dimension mismatched");
     }
 
+    double[][] result = new double[h][v];
+
     //Plus operation on each matrix.
     for (int i = 0; i < h; i++) {
       for (int j = 0; j < v; j++) {
-        this.elems[i][j] += n.getElem(i, j);
+        result[i][j] = this.getElem(i, j) + n.getElem(i, j);
       }
     }
+    return new Matrix(result);
 
   }
+
+  //Multiply matrix to the existing matrix and return the result matrix.
+  public Matrix multiply(Matrix n) {
+    if (!checkDimension(this, n)) {
+      throw new IllegalArgumentException("Dimension mismatched");
+    }
+
+    //x, y are the horizontal dimension and vertical dimension respectively .
+    int x = this.getHoriDimen();
+    int y = this.getVertDimen();
+    int z = n.getVertDimen();
+
+    double[][] result = new double[x][z];
+
+    for (int i = 0; i < x; i++) {
+      for (int j = 0; j < z; j++){
+        for (int k = 0; k < y; k++) {
+          result[i][j] += this.getElem(i, k) * n.getElem(k, j);
+        }
+      }
+    }
+    return new Matrix(result);
+
+  }
+
+
+  private static boolean checkDimension(Matrix m, Matrix n) {
+    return m.getVertDimen() == n.getHoriDimen();
+  }
+
+
 }
